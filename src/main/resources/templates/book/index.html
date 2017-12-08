@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{appName} + ' - ' + #{homePage}"></title>
+<link rel='stylesheet' href='/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css' />
+<link rel='stylesheet' href='/assets/css/ud-style.css' />
+<link rel='stylesheet' href='/assets/css/bs-css.css' />
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+	<!-- top menu and language bar -->
+	<div class="container" style="background-color: #fff; color: black; height: 30px; padding-top:5px;">
+		<a href="?lang=kh"><img src="/assets/images/cambodia_flag.png" style="height:60%;" th:text="' ' + #{khmer}"/></a> | 
+		<a href="?lang=en"><img src="/assets/images/england_flag.png" style="height:60%;" th:text="' ' + #{english}"/></a>
+	</div>
+	<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="27" style="border-radius: 0px;">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/" th:text="#{appName}">Book Store</a>
+			</div>
+			<div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<!-- <ul class="nav navbar-nav">
+						<li><a href="#section1">Books</a></li>
+						<li><a href="#section2">Section 2</a></li>
+						<li><a href="#section3">Section 3</a></li>
+					</ul> -->
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/admin"><span class="glyphicon glyphicon-user"></span> <span th:text="#{admin}"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!-- end of top menu and language bar -->
+	
+	<!-- content -->
+	<div class="container">
+		<div class="row ud-body">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 th:text="#{bookList}">Book List</h2><hr /></div>
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4 ud-book" th:each="book : ${books}" th:object="${book}">
+				<a th:href="@{/book/{id}(id=*{id})}">
+					<img th:src="*{coverImage}" th:alt="*{title}" />
+					<span class="ud-book-text">
+						<span th:text="*{title}" class="ud-book-title"></span>
+						<span th:text="*{author} + ' | ' + *{publishDate}" class="ud-book-subtitle" ></span>
+					</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- end of content -->
+	
+	<!-- footer -->
+	<div class="container-fluid ud-footer">
+		<div class="container">
+			<h3 th:text="'© ' + #{appName} + ' 2017'">@BookStore 2017</h3>
+			<h5>Powered by: Spring Framework</h5>
+		</div>
+	</div>
+	<!-- end of footer -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
