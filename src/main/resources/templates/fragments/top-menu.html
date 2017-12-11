@@ -1,0 +1,67 @@
+<!-- top menu and language bar -->
+<div th:fragment="visitor-menu" xmlns:th="http://www.thymeleaf.org">
+	<div class="container" style="background-color: #fff; color: black; height: 30px; padding-top:5px;">
+		<a href="?lang=kh"><img src="/assets/images/cambodia_flag.png" style="height:60%;" th:text="' ' + #{khmer}"/></a> | 
+		<a href="?lang=en"><img src="/assets/images/england_flag.png" style="height:60%;" th:text="' ' + #{english}"/></a>
+	</div>
+	<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="27" style="border-radius: 0px;">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/" th:text="#{appName}">Book Store</a>
+			</div>
+			<div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<!-- <ul class="nav navbar-nav">
+						<li><a href="#section1">Books</a></li>
+						<li><a href="#section2">Section 2</a></li>
+						<li><a href="#section3">Section 3</a></li>
+					</ul> -->
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/admin"><span class="glyphicon glyphicon-user"></span> <span th:text="#{admin}"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+<!-- end of top menu and language bar -->
+
+<!-- top menu and language bar -->
+<div th:fragment="admin-menu" xmlns:th="http://www.thymeleaf.org">
+	<div class="container" style="background-color: #fff; color: black; height: 30px; padding-top:5px;">
+		<a href="?lang=kh"><img src="/assets/images/cambodia_flag.png" style="height:60%;" th:text="' ' + #{khmer}"/></a> | 
+		<a href="?lang=en"><img src="/assets/images/england_flag.png" style="height:60%;" th:text="' ' + #{english}"/></a>
+	</div>
+	<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="27" style="border-radius: 0px;">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/" th:text="#{appName}">Book Store</a>
+			</div>
+			<div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<!-- <ul class="nav navbar-nav">
+						<li><a href="#section1">Books</a></li>
+						<li><a href="#section2">Section 2</a></li>
+						<li><a href="#section3">Section 3</a></li>
+					</ul> -->
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="/"><span class="glyphicon glyphicon-user"></span> <span th:text="#{visitor}"></span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+<!-- end of top menu and language bar -->
