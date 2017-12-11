@@ -12,4 +12,5 @@ public interface BookService {
 	public Boolean delete(int id);
 	public int bookCount();
 	public int nextID();
+	public List<Book> findByText(String searchText);
 }

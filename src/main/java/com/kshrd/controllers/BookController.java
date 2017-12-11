@@ -29,11 +29,24 @@ public class BookController {
 	FileUploadService fileUploadService;
 
 	@GetMapping("/")
-	public String getBooks(Model model) {
-		List<Book> books = bookService.findAll();
+	public String getBooks(@RequestParam(value="searchText", required=false) String str, Model model) {
+		List<Book> books;
+		if (str==null) {
+			books = bookService.findAll();
+		}else {
+			books = bookService.findByText(str);
+			model.addAttribute("searchText", str);
+		}
 		model.addAttribute("books", books);
 		return "book/index";
 	}
+	
+//	@GetMapping("/search")
+//	public String searchBooks(@RequestParam("searchText") String str, Model model) {
+//		List<Book> books = bookService.findByText(str);
+//		model.addAttribute("books", books);
+//		return "book/index";
+//	}
 	
 	@GetMapping("/book/{id}")
 	public String viewBook(@PathVariable("id") int id, Model model) {
@@ -121,6 +134,13 @@ public class BookController {
 		//Start updating book
 		bookService.update(book.getId(), book);
 		return "redirect:/admin";
+	}
+	
+	@GetMapping("/admin/book/delete/{id}")
+	public String showDeleteForm(@PathVariable("id") int id, Model model) {
+		Book book = bookService.findById(id);
+		model.addAttribute("book", book);
+		return "book/admin/admin-confirm-delete";
 	}
 	
 	@PostMapping("/admin/book/delete/{id}")

@@ -1,49 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layouts/default-layout-admin">
 <head>
-<meta charset="UTF-8" />
-<title>Home - Books</title>
-<link rel='stylesheet' href='/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css' />
-<link rel='stylesheet' href='/assets/css/ud-style.css' />
-<link rel='stylesheet' href='/assets/css/bs-css.css' />
+<title th:text="#{homePage}"></title>
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-	<!-- top menu and language bar -->
-	<div class="container" style="background-color: #fff; color: black; height: 30px; padding-top:5px;">
-		<a href="/admin?lang=kh"><img src="/assets/images/cambodia_flag.png" style="height:60%;" th:text="' ' + #{khmer}"/></a> | 
-		<a href="/admin?lang=en"><img src="/assets/images/england_flag.png" style="height:60%;" th:text="' ' + #{english}"/></a>
-	</div>
-	<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="27" style="border-radius: 0px;">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/" th:text="#{appName}">Book Store</a>
-			</div>
-			<div>
-				<div class="collapse navbar-collapse" id="myNavbar">
-					<!-- <ul class="nav navbar-nav">
-						<li><a href="#section1">Books</a></li>
-						<li><a href="#section2">Section 2</a></li>
-						<li><a href="#section3">Section 3</a></li>
-					</ul> -->
-
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/"><span class="glyphicon glyphicon-user"></span> <span th:text="#{visitor}"></span></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
-	<!-- end of top menu and language bar -->
+<body>
 	
 	<!-- content -->
-	<div class="container">
+	<div class="container" layout:fragment="content">
 		<div class="row ud-body">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="panel panel-primary">
@@ -82,10 +48,16 @@
 								</div>
 							</div>
 							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-								<form th:action="@{/admin/book/delete/{id}(id=*{id})}" Method="POST">
+								<!-- <form th:action="@{/admin/book/delete/{id}(id=*{id})}" Method="POST">
 									<a th:href="@{/admin/book/edit/{id}(id=*{id})}" role="button" class="btn btn-warning my-btn" th:text="#{edit}">Edit</a> <br/>
-									<button type="submit" class="btn btn-danger my-btn" th:text="#{remove}">Remove</button>
-								</form>
+									<button type="submit" id="btnDelete" class="btn btn-danger my-btn" th:text="#{remove}">Remove</button>
+								</form> -->
+								<a th:href="@{/admin/book/edit/{id}(id=*{id})}" 
+								   role="button" class="btn btn-warning my-btn" 
+								   th:text="#{edit}">Edit</a> <br/>
+								<a th:href="@{/admin/book/delete/{id}(id=*{id})}" 
+								   role="button" class="btn btn-danger my-btn" 
+								   th:text="#{remove}">Remove</a>
 								<!-- <a th:href="@{/admin/book/remove/{id}(id=*{id})}" role="button" class="btn btn-danger my-btn">Remove</a> -->
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -96,20 +68,9 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>		
 	</div>
 	<!-- end of content -->
 	
-	<!-- footer -->
-	<div class="container-fluid ud-footer">
-		<div class="container">
-			<h3 th:text="'© ' + #{appName} + ' 2017'">@BookStore 2017</h3>
-			<h5>Powered by: Spring Framework</h5>
-		</div>
-	</div>
-	<!-- end of footer -->
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kshrd.models.Book;
-import com.kshrd.repositories.BookRepository;
+import com.kshrd.repositories.MyBatisBookRepository;
 
 @Service
 public class BookServiceImp implements BookService{
 	@Autowired
-	BookRepository bookRepository;
+	//BookRepository bookRepository;
+	MyBatisBookRepository bookRepository;
 
 	@Override
 	public List<Book> findAll() {
@@ -52,5 +53,11 @@ public class BookServiceImp implements BookService{
 	@Override
 	public int nextID() {
 		return bookCount() + 1;
+	}
+
+	@Override
+	public List<Book> findByText(String searchText) {
+		// TODO Auto-generated method stub
+		return bookRepository.findByText(searchText);
 	}
 }
