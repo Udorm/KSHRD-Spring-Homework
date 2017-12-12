@@ -10,62 +10,91 @@
 	
 	<!-- content -->
 	<div class="container" layout:fragment="content">
-		<div class="row ud-body">
+		<div class="row" style="margin-top: 20px;">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<!-- Panel -->
 				<div class="panel panel-primary">
+				
+					<!-- Panel Heading -->
 					<div class="panel-heading">
 						<div class="container">
 							<div class="row">
-								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-8">
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 									<h4 th:text="#{allBook}">All Bookssss</h4>
 								</div>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-									<a th:href="@{/admin/book/add}" role="button" class="btn btn-default my-btn"
-									   th:text="#{add}">Add</a>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+									<a th:href="@{/admin/book/add}" role="button" class="btn btn-default">
+										<span class="glyphicon glyphicon-plus"></span>
+									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- End of Panel Heading -->
+					
+					<!-- Panel Body-->
 					<div class="panel-body">
+						<!-- Container in panel body -->
 						<div class="container">
-						<div class="row" th:each="book : ${books}" th:object="${book}" style="margin-bottom: 20px">
-							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-6">
-								<img th:src="*{coverImage}" th:alt="*{title}" style="width: 100%;"/>
-							</div>
-							<div class="col-lg-9 col-md-9 col-sm-8 col-xs-6">
-								<h4 th:text="*{title}" style="margin-top:0px;"></h4>
-								<div style="margin-top:5px; font-size:x-small;">
-									<span class="glyphicon glyphicon-user"> </span>
-									<strong th:text="*{author}"></strong>
+							<div class="row" th:each="book : ${books}" th:object="${book}" style="margin-bottom: 20px">
+								<div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+									<img th:src="*{coverImage}" th:alt="*{title}" style="width: 100%;"/>
 								</div>
-								<div style="margin-top:5px; font-size:x-small;">
-									<span class="glyphicon glyphicon-calendar"> </span>
-									<span th:text="*{publishDate}"></span>
+								<div class="col-lg-9 col-md-9 col-sm-7 col-xs-5">
+									<h4 th:text="*{title}" style="margin-top:0px;"></h4>
+									<div style="margin-top:5px; font-size:x-small;">
+										<span class="glyphicon glyphicon-user"> </span>
+										<strong th:text="*{author}"></strong>
+									</div>
+									<div style="margin-top:5px; font-size:x-small;">
+										<span class="glyphicon glyphicon-calendar"> </span>
+										<span th:text="*{publishDate}"></span>
+									</div>
+									<div style="margin-top:5px; font-size:x-small;">
+										<span class="glyphicon glyphicon-align-justify" > </span>
+										<span th:text="*{page} + ' ' + #{pages}"></span>
+									</div>
 								</div>
-								<div style="margin-top:5px; font-size:x-small;">
-									<span class="glyphicon glyphicon-align-justify" > </span>
-									<span th:text="*{page} + ' ' + #{pages}"></span>
+								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+									<a th:href="@{/admin/book/edit/{id}(id=*{id})}" 
+									   role="button" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+									 <a role="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#myModal'+*{id}">
+									   <span class="glyphicon glyphicon-trash"></span></a>
+									<!-- <a th:href="@{/admin/book/remove/{id}(id=*{id})}" role="button" class="btn btn-danger my-btn">Remove</a> -->
 								</div>
-							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-								<!-- <form th:action="@{/admin/book/delete/{id}(id=*{id})}" Method="POST">
-									<a th:href="@{/admin/book/edit/{id}(id=*{id})}" role="button" class="btn btn-warning my-btn" th:text="#{edit}">Edit</a> <br/>
-									<button type="submit" id="btnDelete" class="btn btn-danger my-btn" th:text="#{remove}">Remove</button>
-								</form> -->
-								<a th:href="@{/admin/book/edit/{id}(id=*{id})}" 
-								   role="button" class="btn btn-warning my-btn" 
-								   th:text="#{edit}">Edit</a> <br/>
-								<a th:href="@{/admin/book/delete/{id}(id=*{id})}" 
-								   role="button" class="btn btn-danger my-btn" 
-								   th:text="#{remove}">Remove</a>
-								<!-- <a th:href="@{/admin/book/remove/{id}(id=*{id})}" role="button" class="btn btn-danger my-btn">Remove</a> -->
-							</div>
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<hr style="margin-bottom: 0px;"/>
+								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+									<hr style="margin-bottom: 0px;"/>
+								</div>
+
+								<!-- Modal -->
+								<div class="modal fade" th:id="'myModal'+*{id}" role="dialog">
+									<div class="modal-dialog modal-sm">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title" th:text="#{confirmDeleteMessage}">Modal Header</h4>
+											</div>
+											<div class="modal-body">
+												<p th:text="*{title}">This is a small modal.</p>
+											</div>
+											<div class="modal-footer">
+												<form th:action="@{/admin/book/delete/{id}(id=*{id})}" Method="POST">
+													<button type="submit" id="btnDelete"
+														class="btn btn-danger" th:text="#{remove}">Remove</button>
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal" th:text="#{close}">Close</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End of Modal -->
+								
 							</div>
 						</div>
-						</div>
+						<!-- End of Container in panel body -->
 					</div>
+					<!-- End of Panel -->
 				</div>
 			</div>
 		</div>		
