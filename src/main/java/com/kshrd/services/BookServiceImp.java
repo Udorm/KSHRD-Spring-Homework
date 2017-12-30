@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kshrd.models.Book;
+import com.kshrd.models.Publisher;
 import com.kshrd.repositories.MyBatisBookRepository;
 
 @Service
@@ -29,13 +30,33 @@ public class BookServiceImp implements BookService{
 	@Override
 	public Boolean save(Book book) {
 		// TODO Auto-generated method stub
-		return bookRepository.save(book);
+		boolean status = bookRepository.save(book);
+		System.out.println(book.toString());
+		if (status) {
+			//Save book_publisher
+			for(Publisher publisher : book.getPublishers()) {
+				bookRepository.saveBookPublisher(book.getId(), publisher.getId());
+			}
+			System.out.println("Saved in book_publisher : " + book.getPublishers().toString());
+		}else {
+			System.out.println("Save fials in book_publisher : " + book.getPublishers().toString());
+			return false;
+		}
+		return status;
 	}
 
 	@Override
 	public Boolean update(int id, Book book) {
-		// TODO Auto-generated method stub
-		return bookRepository.update(id, book);
+		boolean status = false;
+		if (bookRepository.deletePublisherByBookId(id)) {
+			if (bookRepository.update(id, book)) {
+				for(Publisher publisher : book.getPublishers()) {
+					bookRepository.saveBookPublisher(book.getId(), publisher.getId());
+				}
+				return true;
+			}
+		}
+		return status;
 	}
 
 	@Override

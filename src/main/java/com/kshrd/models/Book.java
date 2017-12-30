@@ -1,5 +1,7 @@
 package com.kshrd.models;
 
+import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
@@ -25,6 +27,8 @@ public class Book {
 	
 	//@NotEmpty
 	private String coverImage;
+	
+	private List<Publisher> publishers;
 	
 	public Book(int id, String title, String publishDate, String author, int page, String coverImage) {
 		this.id = id;
@@ -73,10 +77,17 @@ public class Book {
 	public void setCoverImage(String coverImage) {
 		this.coverImage = coverImage;
 	}
+	public List<Publisher> getPublishers() {
+		return publishers;
+	}
+
+	public void setPublishers(List<Publisher> publishers) {
+		this.publishers = publishers;
+	}
 
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", publishDate=" + publishDate + ", author=" + author + ", page="
-				+ page + ", coverImage=" + coverImage + "]";
+				+ page + ", coverImage=" + coverImage + ", publishers=" + publishers + "]";
 	}
 }

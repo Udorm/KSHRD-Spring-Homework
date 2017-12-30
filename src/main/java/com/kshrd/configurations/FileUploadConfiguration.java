@@ -9,7 +9,7 @@ public class FileUploadConfiguration extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		System.out.println("Config!!");
+		System.out.println("Config file upload");
 		registry.addResourceHandler("/resources/**")
 				.addResourceLocations("file:/Users/udormphon/Desktop/");
 	}

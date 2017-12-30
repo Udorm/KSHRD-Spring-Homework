@@ -33,6 +33,10 @@
 					<span class="glyphicon glyphicon-align-justify" > </span>
 					<span th:text="*{page} + ' ' + #{pages}"></span>
 				</div><br />
+				<div style="margin-top:0px;">
+					<span class="glyphicon glyphicon-print" > </span>
+					<span th:each="pub : *{publishers}" th:text="${pub.publisher}" class="label label-primary"></span>
+				</div><br />
 				<div style="margin-top:10px;">
 					<strong th:text="#{highlight}">Highlight:</strong>
 					<p th:text="${highlight}" align="justify"></p>

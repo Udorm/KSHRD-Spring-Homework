@@ -1,5 +1,6 @@
 package com.kshrd.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.javafaker.Faker;
 import com.kshrd.models.Book;
+import com.kshrd.models.Publisher;
 import com.kshrd.services.BookService;
 import com.kshrd.services.FileUploadService;
+import com.kshrd.services.PublisherService;
 
 @Controller
 public class BookController {
 	
 	@Autowired
 	BookService bookService;
-	
 	@Autowired
 	FileUploadService fileUploadService;
+	@Autowired
+	PublisherService publisherService;
 
 	@GetMapping("/")
 	public String getBooks(@RequestParam(value="searchText", required=false) String str, Model model) {
@@ -68,16 +72,16 @@ public class BookController {
 	public String addBook(Model model) {		
 		model.addAttribute("addStatus", true);
 		model.addAttribute("book", new Book());
+		model.addAttribute("publishers", publisherService.getAllPublishers());
 		return "/book/admin/admin-add-edit";
 	}
 	
 	@PostMapping("/admin/book/add")
 	public String saveBook(@RequestParam("file") MultipartFile file,
+						   @RequestParam(value="publisherIds") int publisherIds[],
 						   @Validated Book book,
 			  			   BindingResult result,
 			  			   Model model) {
-		
-		System.out.println(book.toString());
 		
 		//If there are some errors occur
 		if (result.hasErrors()) {
@@ -92,9 +96,15 @@ public class BookController {
 		//Upload File to hard drive and get its URL
 		String filePath = fileUploadService.upload(file);
 		book.setCoverImage(filePath);
-		book.setId(bookService.nextID());
 		
-		//Save book to list
+		//Set publishers
+		List<Publisher> publishers = new ArrayList<Publisher>();
+		for (int publisherId : publisherIds) {
+			publishers.add(new Publisher(publisherId));
+		}
+		book.setPublishers(publishers);
+		
+		//Save books
 		bookService.save(book);
 		return "redirect:/admin";
 	}
@@ -104,11 +114,13 @@ public class BookController {
 		Book book = bookService.findById(id);
 		model.addAttribute("book", book);
 		model.addAttribute("addAttribute", false);
+		model.addAttribute("publishers", publisherService.getAllPublishers());
 		return "/book/admin/admin-add-edit";
 	}
 	
 	@PostMapping("/admin/book/edit")
 	public String updateBook(@RequestParam("file") MultipartFile file,
+							 @RequestParam(value="publisherIds") int publisherIds[],
 							   @Validated Book book,
 				  			   BindingResult result,
 				  			   Model model) {
@@ -130,6 +142,13 @@ public class BookController {
 			String filePath = fileUploadService.upload(file);
 			book.setCoverImage(filePath);
 		}
+		
+		//Set publishers
+		List<Publisher> publishers = new ArrayList<Publisher>();
+		for (int publisherId : publisherIds) {
+			publishers.add(new Publisher(publisherId));
+		}
+		book.setPublishers(publishers);
 		
 		//Start updating book
 		bookService.update(book.getId(), book);

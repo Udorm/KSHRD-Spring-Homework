@@ -14,16 +14,22 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class LanguageConfiguration extends WebMvcConfigurerAdapter{
+	
+	//Set parameter for changing language
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor(){
 		LocaleChangeInterceptor tr = new LocaleChangeInterceptor();
 		tr.setParamName("lang");
 		return tr;
 	}
+	
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
 		registry.addInterceptor(localeChangeInterceptor());
 	}
+	
+	//Set Default language
 	@Bean
 	public LocaleResolver localeResolver(){
 		SessionLocaleResolver sr = new SessionLocaleResolver();
@@ -31,6 +37,8 @@ public class LanguageConfiguration extends WebMvcConfigurerAdapter{
 		//sr.setDefaultLocale(new Locale("kh"));
 		return sr;
 	}
+	
+	//Map message locations
 	@Bean
 	public MessageSource messageSource(){
 		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
