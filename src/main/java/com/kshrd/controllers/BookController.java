@@ -167,4 +167,14 @@ public class BookController {
 		bookService.delete(id);
 		return "redirect:/admin";
 	}
+	
+	@GetMapping("/user")
+	public String user() {
+		return "user/user";
+	}
+	
+	@GetMapping("/dba")
+	public String dba() {
+		return "dba/dba";
+	}
 }

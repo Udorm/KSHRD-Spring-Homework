@@ -11,12 +11,15 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(int id, String username, String password) {
+	
+	public User(int id, String username, String password, List<Role> roles) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.roles = roles;
 	}
+
 	public int getId() {
 		return id;
 	}

@@ -99,9 +99,16 @@
 	<!-- end of content -->
 	
 	<th:block layout:fragment="script">
-	<script>
+	<script th:inline="javascript">
 		$(document).ready(function() {
-			$('.selectpicker').selectpicker('val', ['1']);
+			/*<![CDATA[*/
+			var publishers = [[${book.publishers}]];
+			var publisherIds = [];
+			for (i = 0; i < publishers.length; i++){
+				publisherIds = publisherIds.concat(publishers[i].id);
+			}
+			$('.selectpicker').selectpicker('val', publisherIds);
+			/*]]>*/
 		});
 	</script>
 	</th:block>
