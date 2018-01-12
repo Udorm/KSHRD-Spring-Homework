@@ -14,9 +14,17 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.kshrd.models.Book;
+import com.kshrd.utilities.Paging;
 
 @Repository
 public interface MyBatisBookRepository {
+	
+	@Select("SELECT id, title, publishDate, author, page, coverImage FROM books LIMIT #{limit} OFFSET #{offset}")
+	@Results({
+		@Result(property = "id", column = "id"),
+		@Result(property = "publishers", column = "id", many = @Many(select = "com.kshrd.repositories.PublisherRepository.findPublisherByBookId"))
+	})
+	public List<Book> findWithPagination(Paging paging);
 	
 	@Select("SELECT id, title, publishDate, author, page, coverImage FROM books ORDER BY title")
 	@Results({

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorator="layouts/default-layout-visitor">
 <head>
@@ -10,6 +11,17 @@
 
 	<!-- content -->
 	<div class="container" layout:fragment="content">
+		<br />
+		<div class="alert alert-success" sec:authorize="isAuthenticated()">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<span>Welcome </span><span sec:authentication="name">Username</span>
+			<span>! You are login successfully. Your role is </span>
+			<span sec:authentication="principal.authorities">[ROLE_USER]</span>
+		</div>
+		<div class="alert alert-danger" sec:authorize="isAnonymous()">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<span>Your are not login yet</span>
+		</div>
 		
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h2 th:text="#{bookList}">Book List</h2><hr /></div>

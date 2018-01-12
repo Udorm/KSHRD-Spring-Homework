@@ -21,6 +21,7 @@ import com.kshrd.models.Publisher;
 import com.kshrd.services.BookService;
 import com.kshrd.services.FileUploadService;
 import com.kshrd.services.PublisherService;
+import com.kshrd.utilities.Paging;
 
 @Controller
 public class BookController {
@@ -61,10 +62,21 @@ public class BookController {
 		return "book/book-detail";
 	}
 	
-	@GetMapping("/admin")
+	/*@GetMapping("/admin")
 	public String bookList(Model model) {
 		List<Book> books = bookService.findAll();
 		model.addAttribute("books", books);
+		return "book/admin/admin-index";
+	}*/
+	
+	@GetMapping("/admin")
+	public String getBooksWithPagination(Paging paging, Model model) {
+		
+		List<Book> books = bookService.findWithPagination(paging);
+		System.out.println(paging.toString());
+		
+		model.addAttribute("books", books);
+		model.addAttribute("paging", paging);
 		return "book/admin/admin-index";
 	}
 	

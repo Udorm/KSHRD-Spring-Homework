@@ -3,8 +3,10 @@ package com.kshrd.services;
 import java.util.List;
 
 import com.kshrd.models.Book;
+import com.kshrd.utilities.Paging;
 
 public interface BookService {
+	public List<Book> findWithPagination(Paging paging);
 	public List<Book> findAll();
 	public Book findById(int id);
 	public Boolean save(Book book);

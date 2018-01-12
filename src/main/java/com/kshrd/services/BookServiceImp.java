@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kshrd.models.Book;
 import com.kshrd.models.Publisher;
 import com.kshrd.repositories.MyBatisBookRepository;
+import com.kshrd.utilities.Paging;
 
 @Service
 public class BookServiceImp implements BookService{
@@ -80,5 +81,12 @@ public class BookServiceImp implements BookService{
 	public List<Book> findByText(String searchText) {
 		// TODO Auto-generated method stub
 		return bookRepository.findByText(searchText);
+	}
+
+	@Override
+	public List<Book> findWithPagination(Paging paging) {
+		Integer totalCount = bookRepository.bookCount();
+		paging.setTotalCount(totalCount);
+		return bookRepository.findWithPagination(paging);
 	}
 }
